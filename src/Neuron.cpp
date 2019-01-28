@@ -1,4 +1,4 @@
-#include "include/Neuron.hpp"
+#include "../include/Neuron.hpp"
 
 /* Constructor */
 Neuron::Neuron(double val) {

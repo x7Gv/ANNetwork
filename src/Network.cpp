@@ -1,4 +1,4 @@
-#include "include/Network.hpp"
+#include "../include/Network.hpp"
 
 /* Constructor */
 Network::Network(vector<int> topology, int hiddenActivationType, int costFunctionType, int outputActivationType, double learningRate, double momentum, double bias) {
@@ -14,16 +14,27 @@ Network::Network(vector<int> topology, int hiddenActivationType, int costFunctio
 
 	for (int i = 0; i < topologySize; i++) {
 		if (i > 0 && i < (topologySize - 1)) {
-			Layer *l = new Layer(topology.at(i), this->hiddenActivationType);
-			this->layers.push_back(l);
+			this->layers.push_back(new Layer(topology.at(i), this->hiddenActivationType));
 		}
 		else if (i == (topologySize - 1)) {
-			Layer *l = new Layer(topology.at(i), this->outputActivationType);
-			this->layers.push_back(l);
+			this->layers.push_back(new Layer(topology.at(i), this->outputActivationType));
 		}
-		Layer *l = new Layer(topology.at(i));
-		this->layers.push_back(l);
+		else {
+			this->layers.push_back(new Layer(topology.at(i)));
+		}
 	}
+
+	for (int i = 0; i < (topologySize - 1); i++) {
+		Matrix *weigthMatrix = new Matrix(topology.at(i), topology.at(i + 1), true);
+		this->weightMatrices.push_back(weigthMatrix);
+	}
+
+	for (int i = 0; i < topology.at((topologySize - 1)); i++) {
+		errors.push_back(0.00);
+		derivedErrors.push_back(0.00);
+	}
+
+	this->error = 0.00;
 }
 
 /*Constructor */
@@ -36,15 +47,14 @@ Network::Network(vector<int> topology, double learningRate, double momentum, dou
 
 	for (int i = 0; i < topologySize; i++) {
 		if (i > 0 && i < (topologySize - 1)) {
-			Layer *l = new Layer(topology.at(i), this->hiddenActivationType);
-			this->layers.push_back(l);
+			this->layers.push_back(new Layer(topology.at(i), this->hiddenActivationType));
 		}
 		else if (i == (topologySize - 1)) {
-			Layer *l = new Layer(topology.at(i), this->outputActivationType);
-			this->layers.push_back(l);
+			this->layers.push_back(new Layer(topology.at(i), this->outputActivationType));
 		}
-		Layer *l = new Layer(topology.at(i));
-		this->layers.push_back(l);
+		else {
+			this->layers.push_back(new Layer(topology.at(i)));
+		}
 	}
 
 	for (int i = 0; i < (topologySize - 1); i++) {
@@ -54,6 +64,7 @@ Network::Network(vector<int> topology, double learningRate, double momentum, dou
 
 	for (int i = 0; i < topology.at((topologySize - 1)); i++) {
 		errors.push_back(0.00);
+		derivedErrors.push_back(0.00);
 	}
 
 	this->error = 0.00;

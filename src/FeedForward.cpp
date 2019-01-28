@@ -1,5 +1,5 @@
-#include "include/Network.hpp"
-#include "include/Mathematix.hpp"
+#include "../include/Network.hpp"
+#include "../include/Mathematix.hpp"
 
 /* Feed forward algorithm */
 void Network::feedForward() {

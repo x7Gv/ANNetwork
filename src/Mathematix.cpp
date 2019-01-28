@@ -1,4 +1,4 @@
-#include "include/Mathematix.hpp"
+#include "../include/Mathematix.hpp"
 
 /* Matrix multiplication for [a * b = c] */
 void Mathematix::multiplyMatrix(Matrix *a, Matrix *b, Matrix *c) {
